@@ -3,8 +3,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace CompletePong{
-
+namespace CompletePong
+{
     public class LevelManager : MonoBehaviour{
 
         //Simplified Singleton Instance

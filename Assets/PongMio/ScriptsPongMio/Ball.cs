@@ -8,22 +8,25 @@ namespace PongMio {
 
 		private Rigidbody rb;
 		private TrailRenderer trail;
+		public GameObject particleGoal;
 		
 		private float velocityMult = 10;
 		public float maxVelocity = 30;
 
 		private GameManager gameManager;
+		//Girare palla nella direzione in cui sta andando!!
 
 		private void Awake() {
 			rb = GetComponent<Rigidbody>();
 			trail = GetComponent<TrailRenderer>();
+			particleGoal.SetActive(false);
 		}
 
 		public void LaunchBall() {
-			float randomX = Random.Range(-11, 11);
-			float randomZ = Random.Range(-6, 6);
+			float randomX = Random.Range(-50, -50);
+			float randomZ = Random.Range(-100, 100);
 
-			rb.AddForce(randomX, 0, randomZ);
+			rb.AddForce(randomX, 0, randomZ );
 		}
 
 		public void Update() {
@@ -43,7 +46,7 @@ namespace PongMio {
 			}
 
 			if (velocityMult > 0) {
-				rb.velocity *= 1.2f;
+				rb.velocity *= 1f;
 				velocityMult--;
 			}
 		}

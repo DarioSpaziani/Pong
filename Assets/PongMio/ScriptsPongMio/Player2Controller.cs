@@ -4,14 +4,12 @@ using UnityEngine;
 namespace PongMio {
 
 	[RequireComponent(typeof(Rigidbody))]
-	public class PlayerController : MonoBehaviour {
+	public class Player2Controller : MonoBehaviour {
 		
 		public float speed;
 		
 		private Rigidbody rb;
 		private float currentVelocity = 0;
-
-
 
 		private void Awake() {
 			rb = GetComponent<Rigidbody>();
@@ -31,13 +29,14 @@ namespace PongMio {
 
 		private void Movement() {
 			float vertical = 0;
-			if (Input.GetKey(KeyCode.W)) {
+			
+			if (Input.GetKey(KeyCode.I)) {
 				vertical++;
 			}
-			if (Input.GetKey(KeyCode.S)) {
+			
+			if (Input.GetKey(KeyCode.K)) {
 				vertical--;
 			}
-
 			transform.position += new Vector3(0,0,vertical) * speed * Time.deltaTime;
 		}
 
