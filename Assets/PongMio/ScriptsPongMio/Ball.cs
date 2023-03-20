@@ -12,6 +12,7 @@ namespace PongMio {
 		
 		public float velocityMult = 10;
 		public float maxVelocity = 30;
+		
 
 		private GameManager gameManager;
 
@@ -25,7 +26,7 @@ namespace PongMio {
 			float randomX = Random.Range(-50, -50);
 			float randomZ = Random.Range(-100, 100);
 
-			rb.AddForce(randomX, 0, randomZ, ForceMode.Force );
+			rb.AddForce(randomX, 0, randomZ);
 		}
 
 		public void Update() {
@@ -40,6 +41,8 @@ namespace PongMio {
 			if (movementDir != Vector3.zero) {
 				transform.forward = movementDir;
 			}
+			
+			Debug.Log(rb.velocity.x);
 		}
 
 		private void OnCollisionEnter(Collision other) {
@@ -51,7 +54,7 @@ namespace PongMio {
 			}
 
 			if (velocityMult > 0) {
-				rb.velocity *= 1.1f;
+				rb.velocity *= 1.01f;
 				velocityMult--;
 			}
 		}
