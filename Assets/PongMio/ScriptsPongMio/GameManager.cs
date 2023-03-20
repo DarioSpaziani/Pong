@@ -49,7 +49,7 @@ namespace PongMio {
 
 		private IEnumerator CountDownStart() {
 			for (int i = 3; i > 0; i--) {
-				countStartText.text = i.ToString();
+				countStartText.text = $"Match Start in: \n{i}";
 				yield return new WaitForSeconds(1f);
 			}
 

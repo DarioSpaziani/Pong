@@ -14,7 +14,7 @@ namespace PongMio {
 			if (collision.gameObject.name == "Ball") {
 				point1++;
 				GameManager.Instance.ScorePlayer1Func(point1);
-				//ball.particleGoal.SetActive(true);
+				ball.particleGoal.SetActive(true);
 			}
 		}
 	}
