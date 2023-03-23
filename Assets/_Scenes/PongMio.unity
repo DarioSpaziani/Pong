@@ -5943,8 +5943,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particleGoal: {fileID: 354712187}
-  velocityMult: 2
   maxVelocity: 20
+  minusRandomX: -50
+  maxRandomX: -50
+  minusRandomZ: 0
+  maxRandomZ: 0
 --- !u!54 &695599485
 Rigidbody:
   m_ObjectHideFlags: 0

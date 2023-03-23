@@ -10,8 +10,10 @@ namespace PongMio {
 		private TrailRenderer trail;
 		public GameObject particleGoal;
 		
-		public float velocityMult = 10;
+		private float velocityMult = 10;
 		public float maxVelocity = 30;
+		
+		public float minusRandomX, maxRandomX, minusRandomZ, maxRandomZ; 
 		
 
 		private GameManager gameManager;
@@ -23,8 +25,9 @@ namespace PongMio {
 		}
 
 		public void LaunchBall() {
-			float randomX = Random.Range(-50, -50);
-			float randomZ = Random.Range(-100, 100);
+
+			float randomX = Random.Range(minusRandomX, maxRandomX);
+			float randomZ = Random.Range(minusRandomZ, maxRandomZ);
 
 			rb.AddForce(randomX, 0, randomZ);
 		}
@@ -41,8 +44,6 @@ namespace PongMio {
 			if (movementDir != Vector3.zero) {
 				transform.forward = movementDir;
 			}
-			
-			Debug.Log(rb.velocity.x);
 		}
 
 		private void OnCollisionEnter(Collision other) {
