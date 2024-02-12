@@ -6,12 +6,15 @@ namespace PongMio {
 
 	public class Ball : MonoBehaviour {
 
-		private Rigidbody rb;
+		public Rigidbody rb;
+
 		private TrailRenderer trail;
 		public GameObject particleGoal;
 		
 		private float velocityMult = 10;
 		public float maxVelocity = 30;
+		public float actualSpeedX;
+		public float actualSpeedY;
 
 		private GameManager gameManager;
 		//Girare palla nella direzione in cui sta andando!!
@@ -30,6 +33,8 @@ namespace PongMio {
 		}
 
 		public void Update() {
+			actualSpeedX = Math.Abs(rb.velocity.x);
+			actualSpeedY = Math.Abs(rb.velocity.x);
 			if (Math.Abs(rb.velocity.x) > maxVelocity || Mathf.Abs(rb.velocity.z) > maxVelocity) {
 				trail.enabled = true;
 			}

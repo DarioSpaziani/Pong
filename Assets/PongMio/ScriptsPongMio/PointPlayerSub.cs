@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace PongMio {
 	public class PointPlayerSub : MonoBehaviour {
@@ -14,7 +15,7 @@ namespace PongMio {
 			if (collision.gameObject.name == "Ball") {
 				point1++;
 				GameManager.Instance.ScorePlayer1Func(point1);
-				//ball.particleGoal.SetActive(true);
+				SceneManager.LoadScene(0);
 			}
 		}
 	}

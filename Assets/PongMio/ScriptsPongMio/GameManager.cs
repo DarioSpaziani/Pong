@@ -8,7 +8,7 @@ namespace PongMio {
 
 	public class GameManager : Singleton<GameManager> {
 
-		private static GameManager Instance;
+		private static GameManager instance;
 
 		[Header("Panels")]
 		public GameObject scorePanel;
@@ -26,15 +26,10 @@ namespace PongMio {
 		public Ball ball;
 		public PointPlayerSub pointPlayerSub;
 		public PointPlayer2Sub pointPlayer2Sub;
-		private int scorePlayer1;
-		private int scorePlayer2;
+		public float timer;
 
-		private void Awake() {
-			if (Instance == null)
-				Instance = this;
-
-			else if (Instance != this)
-				Destroy(gameObject);
+		public override void Awake() {
+			base.Awake();
 			
 			pointPlayerSub = FindObjectOfType<PointPlayerSub>();
 			pointPlayer2Sub = FindObjectOfType<PointPlayer2Sub>();
@@ -42,12 +37,40 @@ namespace PongMio {
 		}
 
 		private void Start() {
-			Time.timeScale = 1;
+			winnerPanel.SetActive(false);
 			StartCoroutine(CountDownStart());
 
 		}
 
-		private IEnumerator CountDownStart() {
+        private void Update()
+        {
+            if (pointPlayerSub.point1 >= 3)
+            {
+                winnerPanel.SetActive(true);
+                winnerText.text = "Player 1 Win!";
+                winnerText.color = Color.blue;
+				endMatch();
+            }
+			if (pointPlayer2Sub.point2 >= 3)
+			{
+				winnerPanel.SetActive(true);
+				winnerText.text = "Player 2 Win!";
+				winnerText.color = Color.red;
+				endMatch();
+			}
+        }
+        public void ScorePlayer1Func(int point1)
+        {
+            scorePlayer1Text.text = ("Player 1: " + point1);
+        }
+
+        public void ScorePlayer2Func(int point2)
+        {
+            scorePlayer2Text.text = ("Player 2: " + point2);
+        }
+
+        private IEnumerator CountDownStart() 
+		{
 			for (int i = 3; i > 0; i--) {
 				countStartText.text = i.ToString();
 				yield return new WaitForSeconds(1f);
@@ -69,37 +92,24 @@ namespace PongMio {
 			ball.LaunchBall();
 		}
 
-		public void ScorePlayer1Func(int point1) {
-			scorePlayer1Text.text = ("Player 1: " + point1);
-		}
-		
-		public void ScorePlayer2Func(int point2) {
-			scorePlayer2Text.text = ("Player 2: " + point2);
-		}
-
 		public void endMatch() 
 		{
-			if (pointPlayerSub.point1 >= 3) {
-				winnerPanel.SetActive(true);
-				winnerText.text = "Player 1 Win!";
-				winnerText.color = Color.blue;
-			}
-			if (pointPlayer2Sub.point2 >= 3) {
-				winnerPanel.SetActive(true);
-				winnerText.text = "Player 2 Win!";
-				winnerText.color = Color.red;
-			}
 			//aggiunger ciclo di colori per la scritta game over
 			finalScoreText.text = pointPlayerSub.point1 + " - " + pointPlayer2Sub.point2;
-
+			
+			ball.rb.velocity = Vector3.zero;
+			timer += Time.time;
+			if(timer > 3)
+			{
+                rematchPanel.SetActive(true);
+			}
 		}
 
-		private IEnumerator CountdownRematch() {
+		private IEnumerator CountdownStartMatch() {
 			var countdown = 3;
 
 			for (int i = 3; i > 0; i--) {
 				countdown--;
-				Debug.Log(countdown);
 				yield  return new WaitForSeconds(1f);
 			}
 			rematchPanel.SetActive(true);
@@ -107,8 +117,9 @@ namespace PongMio {
 			winnerPanel.SetActive(false);
 		}
 
-		public void Rematch() {
-			StopCoroutine(CountdownRematch());
+		public void Rematch()
+		{
+			StopCoroutine(CountdownStartMatch());
 			SceneManager.LoadScene(0);
 		}
 	}
