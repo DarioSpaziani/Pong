@@ -6,18 +6,17 @@ namespace PongMio {
 
 	public class Ball : MonoBehaviour {
 
-		public Rigidbody rb;
-
+		private Rigidbody rb;
 		private TrailRenderer trail;
 		public GameObject particleGoal;
 		
 		private float velocityMult = 10;
 		public float maxVelocity = 30;
-		public float actualSpeedX;
-		public float actualSpeedY;
+		
+		public float minusRandomX, maxRandomX, minusRandomZ, maxRandomZ; 
+		
 
 		private GameManager gameManager;
-		//Girare palla nella direzione in cui sta andando!!
 
 		private void Awake() {
 			rb = GetComponent<Rigidbody>();
@@ -26,20 +25,25 @@ namespace PongMio {
 		}
 
 		public void LaunchBall() {
-			float randomX = Random.Range(-50, -50);
-			float randomZ = Random.Range(-100, 100);
 
-			rb.AddForce(randomX, 0, randomZ );
+			float randomX = Random.Range(minusRandomX, maxRandomX);
+			float randomZ = Random.Range(minusRandomZ, maxRandomZ);
+
+			rb.AddForce(randomX, 0, randomZ);
 		}
 
 		public void Update() {
-			actualSpeedX = Math.Abs(rb.velocity.x);
-			actualSpeedY = Math.Abs(rb.velocity.x);
 			if (Math.Abs(rb.velocity.x) > maxVelocity || Mathf.Abs(rb.velocity.z) > maxVelocity) {
 				trail.enabled = true;
 			}
 			else
 				trail.enabled = false;
+
+			Vector3 movementDir = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+
+			if (movementDir != Vector3.zero) {
+				transform.forward = movementDir;
+			}
 		}
 
 		private void OnCollisionEnter(Collision other) {
@@ -51,7 +55,7 @@ namespace PongMio {
 			}
 
 			if (velocityMult > 0) {
-				rb.velocity *= 1f;
+				rb.velocity *= 1.01f;
 				velocityMult--;
 			}
 		}
