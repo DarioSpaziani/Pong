@@ -6,7 +6,7 @@ namespace PongMio {
 
 	public class Ball : MonoBehaviour {
 
-		private Rigidbody rb;
+		public Rigidbody rb;
 		private TrailRenderer trail;
 		public GameObject particleGoal;
 		
