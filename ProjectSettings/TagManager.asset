@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - WallEnd
+  - Ball
   layers:
   - Default
   - TransparentFX
